@@ -1,15 +1,11 @@
 package com.toregozhin.springcourse;
 
 
-import com.toregozhin.springcourse.model.Passport;
-import com.toregozhin.springcourse.model.Person;
 import com.toregozhin.springcourse.model.Principal;
 import com.toregozhin.springcourse.model.School;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
-
-
 
 
 public class App {
@@ -23,11 +19,13 @@ public class App {
         try {
             session.beginTransaction();
 
-            Principal principal = session.get(Principal.class, 1);
-            School school = principal.getSchool();
+            School school = session.get(School.class, 4);
+            Principal principal = school.getPrincipal();
+
+            System.out.println("----------------");
             System.out.println(school);
-
-
+            System.out.println("----------------");
+            System.out.println(principal);
 
             session.getTransaction().commit();
 

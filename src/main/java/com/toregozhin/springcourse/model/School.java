@@ -46,7 +46,18 @@ public class School {
     }
 
     public void setPrincipal(Principal principal) {
+        if (this.principal == principal) return;
+
+        if (this.principal != null) {
+            this.principal.setSchool(null);
+        }
+
         this.principal = principal;
+
+        if (principal != null && principal.getSchool() != this) {
+            principal.setSchool(this);
+        }
+
     }
 
 

@@ -61,7 +61,6 @@ public class Principal {
 
     public void setSchool(School school) {
         this.school = school;
-        this.school.setPrincipal(this);
     }
 
     @Override
