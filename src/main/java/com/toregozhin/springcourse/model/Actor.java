@@ -1,32 +1,36 @@
 package com.toregozhin.springcourse.model;
 
-import org.hibernate.annotations.Cascade;
-
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
-@Table(name = "Principal")
-public class Principal {
+@Table(name = "Actor")
+public class Actor {
 
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(name = "name", nullable = false)
+    @Column(name = "name")
     private String name;
 
     @Column(name = "age")
     private int age;
 
-    @OneToOne(mappedBy = "principal")
-    @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
-    private School school;
+    @ManyToMany
+    @JoinTable(
+            name = "Actor_Movie",
+            joinColumns =  @JoinColumn(name = "actor_id"),
+            inverseJoinColumns = @JoinColumn(name = "movie_id")
+    )
+    private List<Movie> movies;
 
-    public Principal() {
+
+    public Actor() {
     }
 
-    public Principal(String name, int age) {
+    public Actor(String name, int age) {
         this.name = name;
         this.age = age;
     }
@@ -55,17 +59,21 @@ public class Principal {
         this.age = age;
     }
 
-    public School getSchool() {
-        return school;
+    public List<Movie> getMovies() {
+        return movies;
     }
 
-    public void setSchool(School school) {
-        this.school = school;
+    public void setMovies(List<Movie> movies) {
+        this.movies = movies;
     }
 
     @Override
     public String toString() {
-        return "👤 Principal: " + name + " (ID: " + id + ", Age: " + age + ")" +
-                (school != null ? " 🏫 School #" + school.getSchoolNumber() : " 🏫 No school assigned");
+        return "Actor{" +
+                "age=" + age +
+                ", name='" + name + '\'' +
+                ", id=" + id +
+                '}';
     }
+
 }
