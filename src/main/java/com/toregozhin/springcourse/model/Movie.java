@@ -2,6 +2,7 @@ package com.toregozhin.springcourse.model;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = "Movie")
@@ -59,6 +60,26 @@ public class Movie {
 
     public void setYearOfProduction(int yearOfProduction) {
         this.yearOfProduction = yearOfProduction;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Movie movie = (Movie) o;
+
+        if (id != movie.id) return false;
+        if (yearOfProduction != movie.yearOfProduction) return false;
+        return name != null ? name.equals(movie.name) : movie.name == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id;
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + yearOfProduction;
+        return result;
     }
 
     @Override
