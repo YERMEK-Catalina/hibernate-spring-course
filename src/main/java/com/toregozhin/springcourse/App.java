@@ -24,20 +24,14 @@ public class App {
             Session session = sessionFactory.getCurrentSession();
             session.beginTransaction();
 
-            Movie movie = new Movie("Pulp Fiction", 1994);
-            Actor actor1 = new Actor("Harvey Keitel", 81);
-            Actor actor2 = new Actor("Samuel L. Jackson", 72);
+            Movie movie = new Movie("Reservoir Dogs", 1992);
+            Actor actor = session.get(Actor.class, 1);
 
-            movie.setActors(new ArrayList<>(List.of(actor1, actor2)));
+            movie.setActors(new ArrayList<>(Collections.singletonList(actor)));
 
-            actor1.setMovies(new ArrayList<>(Collections.singletonList(movie)));
-            actor2.setMovies(new ArrayList<>(Collections.singletonList(movie)));
-
+            actor.getMovies().add(movie);
             session.save(movie);
             
-            session.save(actor1);
-            session.save(actor2);
-
             session.getTransaction().commit();
 
         }
